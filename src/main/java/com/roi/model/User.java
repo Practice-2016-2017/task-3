@@ -1,49 +1,26 @@
 package com.roi.model;
 
-//@Component
 public class User {
+    private Integer status;
+    private String name;
+    private Integer id;
 
-    private String login;
-    private String password;
-    private String fio;
-    private String level;
-
-    public User(String login, String password, String fio, String level) {
-        this.login = login;
-        this.password = password;
-        this.fio = fio;
-        this.level = level;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
-
-    public String getLogin() {
-        return login;
+    public Integer getStatus() {
+        return status;
     }
-
-    public void setLogin(String login) {
-        this.login = login;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public String getPassword() {
-        return password;
+    public String getName() {
+        return name;
     }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setId(Integer id) {
+        this.id = id;
     }
-
-    public String getFio() {
-        return fio;
-    }
-
-    public void setFio(String fio) {
-        this.fio = fio;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
+    public Integer getId() {
+        return id;
     }
 }
