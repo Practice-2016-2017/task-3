@@ -1,3 +1,3 @@
 # task-3
-Repository for a team that will implement task #3
-Hotel booking service
+<p>Repository for a team that will implement task #3</p>
+<p>Hotel booking service</p>
