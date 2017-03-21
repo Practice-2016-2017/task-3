@@ -9,15 +9,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.ModelMap;
 
 @Controller
-public class StudentController {
+public class UserController {
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ModelAndView student() {
         return new ModelAndView("user", "command", new User());
     }
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String addStudent(@ModelAttribute("SpringWeb")User user,
-
-                             ModelMap model) {
+    public String addStudent(@ModelAttribute("SpringWeb")User user, ModelMap model) {
         model.addAttribute("name", user.getName());
         model.addAttribute("status", user.getStatus());
         model.addAttribute("id", user.getId());
