@@ -8,7 +8,7 @@
 
 
 <h2>User Information</h2>
-<form:form method = "POST" action = "/HelloWeb/addUser">
+<form:form method = "POST" action = "/hotel/adduser.htm">
     <table>
         <tr>
             <td><form:label path = "name">Name</form:label></td>
