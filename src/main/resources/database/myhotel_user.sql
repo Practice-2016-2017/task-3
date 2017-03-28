@@ -1,0 +1,2 @@
+INSERT INTO myhotel.user (userId, level, login, password, fio, booking_bookingId) VALUES (1, 'manager', '112', '312', '213', null);
+INSERT INTO myhotel.user (userId, level, login, password, fio, booking_bookingId) VALUES (2, 'tourist', 'fsd', 'fds', 'dsf', null);

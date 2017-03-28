@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class adminController {
     private HotelService hotelService;
 
-    @Autowired(required = true)
+    @Autowired()
     @Qualifier(value = "hotelService")
     public void setHotelService(HotelService hotelService) {
         this.hotelService = hotelService;
