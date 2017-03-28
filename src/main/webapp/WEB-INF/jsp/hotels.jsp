@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -17,7 +16,7 @@
 <h1>Hotel List</h1>
 
 <c:if test="${!empty getAllHotels}">
-    <table class="tg">
+    <table>
         <tr>
             <th width="80">ID</th>
             <th width="120">Info</th>
@@ -51,7 +50,6 @@
                 </td>
                 <td>
                     <form:input path="hotelId" readonly="true" size="8" disabled="true"/>
-                    <form:hidden path="hotelId"/>
                 </td>
             </tr>
         </c:if>
@@ -66,7 +64,11 @@
             </td>
         </tr>
         <tr>
-            <td colspan="1">
+            <td colspan="2">
+                <c:if test="${!empty hotel.info}">
+                    <input type="submit"
+                           value="<spring:message text="Edit Hotel"/>"/>
+                </c:if>
                 <c:if test="${empty hotel.info}">
                     <input type="submit"
                            value="<spring:message text="Add Hotel"/>"/>

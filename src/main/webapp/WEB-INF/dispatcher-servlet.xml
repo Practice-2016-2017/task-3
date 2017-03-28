@@ -41,7 +41,7 @@
         </property>
     </bean>
 
-    <!--BookDao and BookService beans-->
+    <!--HotelDao and HotelService beans-->
     <bean id="hotelDao" class="com.roi.dao.HotelDaoImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
     </bean>

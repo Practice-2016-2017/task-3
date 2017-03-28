@@ -1,9 +1,6 @@
 package com.roi.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "hotel")
@@ -11,13 +8,12 @@ public class Hotel {
 
     @Id
     @Column(name = "hotelId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer hotelId;
 
     @Column(name = "info")
     private String info;
 
-    @Column(name = "user_userId")
-    private Integer user_userId;
 
     public Integer getHotelId() {
         return hotelId;
@@ -35,20 +31,11 @@ public class Hotel {
         this.info = info;
     }
 
-    public Integer getUser_userId() {
-        return user_userId;
-    }
-
-    public void setUser_userId(Integer user_userId) {
-        this.user_userId = user_userId;
-    }
-
     @Override
     public String toString() {
         return "Hotel{" +
                 "hotelId=" + hotelId +
                 ", info='" + info + '\'' +
-                ", user_userId=" + user_userId +
                 '}';
     }
 }

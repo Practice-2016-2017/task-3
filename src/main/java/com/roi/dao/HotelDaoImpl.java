@@ -37,7 +37,7 @@ public class HotelDaoImpl implements HotelDao {
     @Override
     public void removeHotel(int id) {
         Session session = this.sessionFactory.getCurrentSession();
-        Hotel hotel = (Hotel) session.load(Hotel.class, new Integer(id));
+        Hotel hotel = (Hotel) session.load(Hotel.class, id);
 
         if (hotel != null) {
             session.delete(hotel);
@@ -48,7 +48,7 @@ public class HotelDaoImpl implements HotelDao {
     @Override
     public Hotel getHotelById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
-        Hotel hotel = (Hotel) session.load(Hotel.class, new Integer(id));
+        Hotel hotel = (Hotel) session.load(Hotel.class, id);
         logger.info("Hotel successfully loaded. Hotel details: " + hotel);
 
         return hotel;
