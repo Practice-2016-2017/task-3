@@ -2,11 +2,10 @@ package com.roi.controller;
 
 import com.roi.model.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class UserController {
@@ -14,10 +13,13 @@ public class UserController {
     public ModelAndView user() {
         return new ModelAndView("user", "command", new User());
     }
-    @RequestMapping("/adduser.htm")
-    public String insert(HttpServletRequest req, User user)
-    {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+    @RequestMapping(value = "/adduser.htm", method = RequestMethod.POST)
+    public String addSUser(User user, ModelMap model) {
+        model.addAttribute("login", user.getLogin());
+        model.addAttribute("age", user.getAge());
+        model.addAttribute("id", user.getId());
+
         return "result";
     }
 }

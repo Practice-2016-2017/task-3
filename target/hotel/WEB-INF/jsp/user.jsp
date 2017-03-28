@@ -11,12 +11,12 @@
 <form:form method = "POST" action = "/hotel/adduser.htm">
     <table>
         <tr>
-            <td><form:label path = "name">Name</form:label></td>
-            <td><form:input path = "name" /></td>
+            <td><form:label path = "login">Login</form:label></td>
+            <td><form:input path = "login" /></td>
         </tr>
         <tr>
-            <td><form:label path = "status">Age</form:label></td>
-            <td><form:input path = "status" /></td>
+            <td><form:label path = "age">Age</form:label></td>
+            <td><form:input path = "age" /></td>
         </tr>
         <tr>
             <td><form:label path = "id">id</form:label></td>

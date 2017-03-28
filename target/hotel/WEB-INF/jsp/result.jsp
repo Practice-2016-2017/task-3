@@ -9,11 +9,11 @@
 <table>
     <tr>
         <td>Name</td>
-        <td>${name}</td>
+        <td>${login}</td>
     </tr>
     <tr>
         <td>Age</td>
-        <td>${status}</td>
+        <td>${age}</td>
     </tr>
     <tr>
         <td>ID</td>
