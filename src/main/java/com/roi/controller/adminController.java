@@ -3,7 +3,6 @@ package com.roi.controller;
 import com.roi.model.Hotel;
 import com.roi.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class adminController {
     private HotelService hotelService;
 
-    @Autowired()
+    @Autowired
     public void setHotelService(HotelService hotelService) {
         this.hotelService = hotelService;
     }
@@ -52,6 +51,6 @@ public class adminController {
         model.addAttribute("hotel", this.hotelService.getHotelById(id));
         model.addAttribute("getAllHotels", this.hotelService.getAllHotels());
 
-        return "hotels";
+        return "/WEB-INF/hotels.jsp";
     }
 }

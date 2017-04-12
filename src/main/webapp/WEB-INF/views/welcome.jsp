@@ -12,6 +12,8 @@
 </head>
 <body>
 
+<a href="../../hotel">Back to main menu</a>
+
 <div >
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">
