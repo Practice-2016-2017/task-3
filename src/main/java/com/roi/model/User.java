@@ -1,27 +1,50 @@
 package com.roi.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * JavaBean object that represents a User
  */
+
+
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
+
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "age")
-    private Integer age;
-    @Column(name = "fio")
-    private String fio;
-    @Column(name = "status")
-    private Integer status;
-    @Column(name = "login")
-    private String login;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "password")
     private String password;
+
+    @Transient
+    private String confirmPassword;
+
+    @ManyToMany
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getPassword() {
         return password;
@@ -31,50 +54,19 @@ public class User {
         this.password = password;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
-    public String getFio() {
-        return fio;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setFio(String fio) {
-        this.fio = fio;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-    public Integer getStatus() {
-        return status;
-    }
-    public void setLogin(String login) {
-        this.login = login;
-    }
-    public String getLogin() {
-        return login;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", age=" + age +
-                ", fio='" + fio + '\'' +
-                ", status=" + status +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
