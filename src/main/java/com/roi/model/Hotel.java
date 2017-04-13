@@ -7,8 +7,7 @@ import javax.persistence.*;
 public class Hotel {
 
     @Id
-    @Column(name = "hotelId")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer hotelId;
 
     @Column(name = "info")
