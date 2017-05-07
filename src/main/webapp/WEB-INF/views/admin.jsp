@@ -13,7 +13,8 @@
 
 <body>
 
-<a href="../../hotel/hotels">To hotels</a>
+<a href="../../hotel/hotels/">Edit hotels</a>
+
 
 <div class="container">
     <c:if test="${pageContext.request.userPrincipal.name != null}">

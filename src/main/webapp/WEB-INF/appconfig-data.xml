@@ -25,8 +25,8 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.dialect">${hb.dialect}</prop>
+                <prop key="hibernate.show_sql">${hb.showSql}</prop>
             </props>
         </property>
     </bean>

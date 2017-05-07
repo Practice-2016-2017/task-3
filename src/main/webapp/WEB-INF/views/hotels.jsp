@@ -20,7 +20,6 @@
         <tr>
             <th width="80">ID</th>
             <th width="120">Info</th>
-            <th width="60">Edit</th>
             <th width="60">Delete</th>
         </tr>
         <c:forEach items="${getAllHotels}" var="hotel">

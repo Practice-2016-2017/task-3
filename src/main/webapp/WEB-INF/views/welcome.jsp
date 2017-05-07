@@ -13,6 +13,8 @@
 <body>
 
 <a href="../../hotel">Back to main menu</a>
+<a href="../../hotel/hotels/">Edit hotels</a>
+
 
 <div >
 
