@@ -13,7 +13,11 @@ public class Hotel {
     @Column(name = "info")
     private String info;
 
+    public Hotel(){};
 
+    public Hotel(String info){
+        this.info = info;
+    }
     public Integer getHotelId() {
         return hotelId;
     }

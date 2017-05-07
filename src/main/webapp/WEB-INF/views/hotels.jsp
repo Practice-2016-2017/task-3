@@ -27,7 +27,6 @@
             <tr>
                 <td>${hotel.hotelId}</td>
                 <td>${hotel.info}</td>
-                <td><a href="<c:url value='/edit/${hotel.hotelId}'/>">Edit</a></td>
                 <td><a href="<c:url value='/remove/${hotel.hotelId}'/>">Delete</a></td>
             </tr>
         </c:forEach>
@@ -53,6 +52,7 @@
                 </td>
             </tr>
         </c:if>
+
         <tr>
             <td>
                 <form:label path="info">
@@ -63,18 +63,16 @@
                 <form:input path="info"/>
             </td>
         </tr>
+
         <tr>
-            <td colspan="2">
-                <c:if test="${!empty hotel.info}">
-                    <input type="submit"
-                           value="<spring:message text="Edit Hotel"/>"/>
-                </c:if>
+        <td colspan="2">
                 <c:if test="${empty hotel.info}">
                     <input type="submit"
                            value="<spring:message text="Add Hotel"/>"/>
                 </c:if>
             </td>
         </tr>
+
     </table>
 </form:form>
 </body>

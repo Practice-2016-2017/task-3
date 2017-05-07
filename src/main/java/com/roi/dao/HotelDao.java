@@ -1,17 +1,10 @@
 package com.roi.dao;
 
 import com.roi.model.Hotel;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface HotelDao {
-    public void addHotel(Hotel hotel);
 
-    public void updateHotel(Hotel hotel);
-
-    public void removeHotel(int id);
-
-    public Hotel getHotelById(int id);
-
-    public List<Hotel> getAllHotels();
+public interface HotelDao extends JpaRepository<Hotel,Integer> {
 }

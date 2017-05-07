@@ -8,7 +8,7 @@
     <title>Hotels</title>
 </head>
 <body>
-<a href="../../hotel">Back to main menu</a>
+<a href="../../hotel">Back to main menu1</a>
 
 <br/>
 <br/>
