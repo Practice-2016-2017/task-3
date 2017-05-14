@@ -2,13 +2,16 @@ package com.roi.service;
 
 import com.roi.dao.RoleDao;
 import com.roi.dao.UserDao;
+import com.roi.model.Hotel;
 import com.roi.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.roi.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,10 +40,15 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Set<Role> roles = new HashSet<>();
-        roles.add(roleDao.getOne(1L));
+        roles.add(roleDao.getOne(1));
         user.setRoles(roles);
         userDao.save(user);
 
+    }
+
+    @Override
+    public void removeUser(Long id) {
+        userDao.delete(id);
     }
 
     @Override
@@ -49,4 +57,30 @@ public class UserServiceImpl implements UserService {
         return userDao.findByUsername(username);
 
     }
+
+    @Override
+    @Transactional
+    public List<User> getAllUsers(){
+
+            List<User> userList = userDao.findAll();
+            return userList;
+        }
+
+    @Override
+    public void addUser(User user){
+
+    }
+
+    @Override
+    public void editUser(User user){
+        userDao.saveAndFlush(user);
+    }
+
+    @Override
+    public User getUserById(Long id){
+        return userDao.findOne(id);
+    }
+
+
+
 }

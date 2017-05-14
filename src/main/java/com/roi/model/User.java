@@ -25,6 +25,11 @@ public class User {
     @Transient
     private String confirmPassword;
 
+    @ManyToOne
+    @JoinColumn(name = "hotelId")
+    private Hotel attachedHotel;
+
+
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -69,4 +74,14 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Hotel getAttachedHotel() {
+        return attachedHotel;
+    }
+
+    public void setAttachedHotel(Hotel attachedHotel) {
+        this.attachedHotel = attachedHotel;
+    }
+
+
 }
