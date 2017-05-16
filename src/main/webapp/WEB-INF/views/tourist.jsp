@@ -13,21 +13,17 @@
 
 <body>
 
-<a href="../../users/">Edit hotels</a>
-
+<a href="${contextPath}/welcome">Back to main menu</a>
 
 <div class="container">
     <c:if test="${pageContext.request.userPrincipal.name != null}">
         <form id="logoutForm" method="post" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-        <h2>Tourist Page ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+        <h2><p>User Page</p> ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
         </h2>
     </c:if>
 </div>
-
-
-
 
 </body>
 </html>

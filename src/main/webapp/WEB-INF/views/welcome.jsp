@@ -12,6 +12,8 @@
 </head>
 <body>
 
+<c:redirect url ="/welcome/${pageContext.request.userPrincipal.name}"/>
+
 <div >
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">

@@ -8,7 +8,7 @@
     <title>Hotels</title>
 </head>
 <body>
-<a href="../../welcome">Back to main menu</a>
+<a href="${contextPath}/welcome">Back to main menu</a>
 
 <br/>
 <br/>
@@ -24,7 +24,7 @@
         </tr>
         <c:forEach items="${getAllHotelId}" var="hotel">
             <tr>
-                <td><INPUT TYPE="radio" name="hotelId" value=${user.id}/>${hotel.hotelId}</td>
+                <td>${hotel.hotelId}</td>
                 <td>${hotel.info}</td>
                 <td><a href="<c:url value='/remove/${hotel.hotelId}'/>">Delete</a></td>
             </tr>
@@ -63,20 +63,24 @@
     <table>
         <tr>
             <th width="80">ID</th>
-            <th width="120">Info</th>
+            <th width="120">Name</th>
             <th width="60">Delete</th>
+            <th width="120">Manager of</th>
         </tr>
-        <c:forEach items="${getAllUsers}" var="user">
-            <%--<c:if test="${user.biggestRole.name != ROLE_ADMIN}">--%>
+        <c:forEach items="${getAllNotAdmins}" var="user">
+
 
                 <tr>
-                    <td><INPUT TYPE="radio" name="userId" value=${user.id}/>${user.id}</td>
+                    <td>${user.id}</td>
                     <td>${user.username}</td>
                     <td><a href="<c:url value='/removeUser/${user.id}'/>">Delete</a></td>
+                    <c:if test="${user.attachedHotel ne null}">
+                        <td>${user.attachedHotel.info}</td>
+                    </c:if>
 
                 </tr>
 
-            <%--</c:if>--%>
+
         </c:forEach>
     </table>
 </c:if>

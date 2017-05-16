@@ -19,6 +19,7 @@ public interface UserService {
     void addUser(User user);
     void editUser(User user);
     User getUserById(Long id);
+    List<User> getAllNotAdmins();
     User findByUsername(String username);
     String getRoleByUsername(String username);
 }

@@ -26,7 +26,7 @@
     </c:if>
 </div>
 
-
+<a href="${contextPath}/users/">Edit hotels and users</a>
 
 
 </body>

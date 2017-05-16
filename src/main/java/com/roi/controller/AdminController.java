@@ -64,6 +64,7 @@ public class AdminController {
         model.addAttribute("getAllUsers", this.userService.getAllUsers());
         model.addAttribute("hotel", new Hotel());
         model.addAttribute("getAllHotelId", this.hotelService.getAllHotels());
+        model.addAttribute("getAllNotAdmins", this.userService.getAllNotAdmins());
         return "users";
     }
 

@@ -13,7 +13,6 @@
 
 <body>
 
-<a href="../../users/">Edit hotels</a>
 
 
 <div class="container">

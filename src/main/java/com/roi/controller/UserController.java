@@ -75,4 +75,14 @@ public class UserController {
     public String admin(Model model) {
         return "admin";
     }
+
+    @RequestMapping(value = "/manager", method = RequestMethod.GET)
+    public String manager(Model model) {
+        return "manager";
+    }
+
+    @RequestMapping(value = "/tourist", method = RequestMethod.GET)
+    public String tourist(Model model) {
+        return "tourist";
+    }
 }
