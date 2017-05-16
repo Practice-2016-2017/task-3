@@ -87,7 +87,7 @@ public class AdminController {
         user.getRoles().add(role);
         this.userService.editUser(user);
 
-        return "redirect:/users/";
+        return "redirect:/users";
 
     }
 

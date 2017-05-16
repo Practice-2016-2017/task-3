@@ -27,7 +27,7 @@
 
 </div>
 
-<a href="../../users/">Edit hotels and users</a>
+<a href="${contextPath}/users/">Edit hotels and users</a>
 
 </body>
 </html>

@@ -81,8 +81,10 @@
     </table>
 </c:if>
 <p>
-    <form:form action="/users/addManager">
-    <label>
+
+    <c:url var="addAction2" value="/users/addManager"/>
+<p></p>
+<form:form action="${addAction2}" commandName="hotel">    <label>
         <select name="HotelInfo">
             <c:forEach items="${getAllHotelId}" var="hotel">
                 <option value="${hotel.info}">${hotel.info}</option>
