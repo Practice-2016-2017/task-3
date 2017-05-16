@@ -1,4 +1,5 @@
 package com.roi.model;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -37,6 +38,8 @@ public class Role {
     public String getName() {
         return name;
     }
+
+
 
     public void setName(String name) {
         this.name = name;

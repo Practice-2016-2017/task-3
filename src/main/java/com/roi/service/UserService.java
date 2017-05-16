@@ -1,6 +1,5 @@
 package com.roi.service;
 
-import com.roi.model.Hotel;
 import com.roi.model.User;
 
 import java.util.List;
@@ -20,6 +19,6 @@ public interface UserService {
     void addUser(User user);
     void editUser(User user);
     User getUserById(Long id);
-
     User findByUsername(String username);
+    String getRoleByUsername(String username);
 }

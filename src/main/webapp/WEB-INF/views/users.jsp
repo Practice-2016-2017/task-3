@@ -8,14 +8,12 @@
     <title>Hotels</title>
 </head>
 <body>
-<a href="../../hotel">Back to main menu</a>
+<a href="../../welcome">Back to main menu</a>
 
 <br/>
 <br/>
 
-<h1>User List</h1>
-
-<form action = "addManager" >
+<h1>Hotel List</h1>
 
 <c:if test="${!empty getAllHotelId}">
     <table>
@@ -34,7 +32,32 @@
     </table>
 </c:if>
 
+<c:url var="addAction1" value="/users/addH"/>
+<p></p>
+<form:form action="${addAction1}" commandName="hotel">
+    <table>
+        <tr>
+            <td>
+                <form:label path="info">
+                    <spring:message text="Info"/>
+                </form:label>
+            </td>
+            <td>
+                <form:input path="info"/>
+            </td>
 
+            <td colspan="2">
+                <c:if test="${empty hotel.info}">
+                    <input type="submit" value="<spring:message text="Add Hotel"/>"/>
+                </c:if>
+            </td>
+        </tr>
+
+    </table>
+
+</form:form>
+
+<h1>Manager and tourist List</h1>
 
 <c:if test="${!empty getAllUsers}">
     <table>
@@ -44,22 +67,38 @@
             <th width="60">Delete</th>
         </tr>
         <c:forEach items="${getAllUsers}" var="user">
-            <tr>
-                <td><INPUT TYPE="radio" name="userId" value=${user.id}/>${user.id}</td>
-                <td>${user.username}</td>
-                <td><a href="<c:url value='/removeUser/${user.id}'/>">Delete</a></td>
+            <%--<c:if test="${user.biggestRole.name != ROLE_ADMIN}">--%>
 
-            </tr>
+                <tr>
+                    <td><INPUT TYPE="radio" name="userId" value=${user.id}/>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td><a href="<c:url value='/removeUser/${user.id}'/>">Delete</a></td>
 
+                </tr>
+
+            <%--</c:if>--%>
         </c:forEach>
     </table>
 </c:if>
+<p>
+    <form:form action="/users/addManager">
+    <label>
+        <select name="HotelInfo">
+            <c:forEach items="${getAllHotelId}" var="hotel">
+                <option value="${hotel.info}">${hotel.info}</option>
+            </c:forEach>
+        </select>
+    </label>
 
+    <label>
+        <select name="Username">
+            <c:forEach items="${getAllUsers}" var="user">
+                <option value="${user.username}">${user.username}</option>
+            </c:forEach>
+        </select>
+    </label>
 
-    <input type = "submit" value = "Submit" />
-
-</form>>
-
-
+    <input type="submit" value="<spring:message text="Add manager"/>"/>
+    </form:form>
 </body>
 </html>

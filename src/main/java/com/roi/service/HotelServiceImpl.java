@@ -2,14 +2,9 @@ package com.roi.service;
 
 import com.roi.dao.HotelDao;
 import com.roi.model.Hotel;
-import com.roi.model.User;
-import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 
@@ -51,5 +46,10 @@ public class HotelServiceImpl implements HotelService {
 
         List<Hotel> hotelList = hotelDao.findAll();
         return hotelList;
+    }
+
+    @Override
+    public Hotel findByInfo(String info) {
+        return hotelDao.findByInfo(info);
     }
 }

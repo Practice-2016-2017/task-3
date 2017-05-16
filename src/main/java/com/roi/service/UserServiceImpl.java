@@ -2,10 +2,9 @@ package com.roi.service;
 
 import com.roi.dao.RoleDao;
 import com.roi.dao.UserDao;
-import com.roi.model.Hotel;
 import com.roi.model.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.roi.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,15 +52,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-
         return userDao.findByUsername(username);
-
     }
+
+    @Override
+    public String getRoleByUsername(String username) {
+        return userDao.findByUsername(username).getRoles().iterator().next().getName();
+    }
+
+
 
     @Override
     @Transactional
     public List<User> getAllUsers(){
-
             List<User> userList = userDao.findAll();
             return userList;
         }

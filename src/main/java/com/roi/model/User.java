@@ -1,6 +1,7 @@
 package com.roi.model;
 
 import javax.persistence.*;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -83,5 +84,17 @@ public class User {
         this.attachedHotel = attachedHotel;
     }
 
-
+    public Role getBiggestRole() {
+        int id = 1;
+        Role res = null;
+        Iterator rolesIter = roles.iterator();
+        while(rolesIter.hasNext()) {
+            Role role = (Role)rolesIter.next();
+            if(role.getId() >= id) {
+                res = role;
+                id = role.getId();
+            }
+        }
+        return res;
+    }
 }

@@ -5,8 +5,9 @@
     <title>Hotel</title>
 </head>
 <body>
+<p>Добро пожаловать!</p>
 <br/>
-<a href="<c:url value="/hotels"/>" target="_blank">Admin page</a>
+<a href="<c:url value="/login"/>" target="_blank">Войти в систему</a>
 <br/>
 </body>
 </html>

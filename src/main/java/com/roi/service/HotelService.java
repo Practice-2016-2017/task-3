@@ -1,7 +1,6 @@
 package com.roi.service;
 
 import com.roi.model.Hotel;
-import com.roi.model.User;
 
 import java.util.List;
 
@@ -11,6 +10,7 @@ public interface HotelService {
     void removeHotel(int id);
     Hotel getHotelById(int id);
     List<Hotel> getAllHotels();
+    Hotel findByInfo(String info);
 
 
 }
