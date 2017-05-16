@@ -2,11 +2,13 @@ package com.roi.service;
 
 import com.roi.dao.HotelDao;
 import com.roi.model.Hotel;
+import com.roi.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -39,6 +41,8 @@ public class HotelServiceImpl implements HotelService {
     public Hotel getHotelById(int id) {
         return hotelDao.findOne(id);
     }
+
+
 
     @Override
     @Transactional

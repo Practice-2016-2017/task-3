@@ -13,8 +13,6 @@
 
 <body>
 
-<a href="../../users/">Edit hotels</a>
-
 
 <div class="container">
     <c:if test="${pageContext.request.userPrincipal.name != null}">

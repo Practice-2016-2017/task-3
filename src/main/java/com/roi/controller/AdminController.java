@@ -2,10 +2,14 @@ package com.roi.controller;
 
 import com.roi.model.Hotel;
 import com.roi.model.Role;
+import com.roi.model.Room;
 import com.roi.model.User;
 import com.roi.service.HotelService;
+import com.roi.service.RoomService;
 import com.roi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +27,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoomService roomService;
 
 
     /*@RequestMapping(value = "hotels", method = RequestMethod.GET)
@@ -75,6 +82,9 @@ public class AdminController {
 
         return "redirect:/users/";
     }
+
+
+
 
     @RequestMapping(value = "/users/addManager", method = RequestMethod.POST)
     @Transactional

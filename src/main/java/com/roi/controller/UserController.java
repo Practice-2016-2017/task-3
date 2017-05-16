@@ -1,10 +1,15 @@
 package com.roi.controller;
 
+import com.roi.model.Hotel;
 import com.roi.model.User;
+import com.roi.service.RoomService;
 import com.roi.service.SecurityService;
 import com.roi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +33,10 @@ public class UserController {
 
     @Autowired
     private com.roi.validator.UserValidator userValidator;
+
+    @Autowired
+    private RoomService roomService;
+
 
 
 
@@ -77,9 +86,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
+    @Transactional
     public String manager(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        Hotel currentHotel = userService.findByUsername(name).getAttachedHotel();
+        model.addAttribute("attachedHotel", currentHotel.getInfo());
+        model.addAttribute("Rooms",roomService.getRoomByHotel(currentHotel));
         return "manager";
     }
+
 
     @RequestMapping(value = "/tourist", method = RequestMethod.GET)
     public String tourist(Model model) {

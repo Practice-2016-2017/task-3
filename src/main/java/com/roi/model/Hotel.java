@@ -1,6 +1,7 @@
 package com.roi.model;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,9 @@ public class Hotel {
 
     @OneToMany(mappedBy = "attachedHotel")
     private Set<User> users;
+
+    @OneToMany(mappedBy = "hotel")
+    private Set<Room> room;
 
     public Hotel(){};
 
@@ -44,6 +48,14 @@ public class Hotel {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public Set<Room> getRoom() {
+        return room;
+    }
+
+    public void setRoom(Set<Room> room) {
+        this.room = room;
     }
 
     @Override

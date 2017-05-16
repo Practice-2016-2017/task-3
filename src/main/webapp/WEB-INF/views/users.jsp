@@ -8,6 +8,9 @@
     <title>Hotels</title>
 </head>
 <body>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <a href="${contextPath}/welcome">Back to main menu</a>
 
 <br/>
