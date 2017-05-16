@@ -6,16 +6,17 @@ import com.roi.model.User;
 import com.roi.service.HotelService;
 import com.roi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Set;
+import javax.transaction.Transactional;
 
 @Controller
-public class adminController {
+public class AdminController {
 
     @Autowired
     private HotelService hotelService;
@@ -24,37 +25,36 @@ public class adminController {
     private UserService userService;
 
 
-    @RequestMapping(value = "hotels", method = RequestMethod.GET)
+    /*@RequestMapping(value = "hotels", method = RequestMethod.GET)
     public String getAllHotels(Model model) {
         model.addAttribute("hotel", new Hotel());
         model.addAttribute("getAllHotels", this.hotelService.getAllHotels());
 
-        return "hotels";
-    }
+        return "users";
+    }*/
 
-    @RequestMapping(value = "/hotels/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/addH", method = RequestMethod.POST)
     public String addHotel(@RequestParam("info") String str) {
         Hotel hotel = new Hotel(str);
         this.hotelService.addHotel(hotel);
-
-
-        return "redirect:/hotels/";
+        return "redirect:/users/";
     }
+
 
     @RequestMapping("/remove/{hotelId}")
     public String removeHotel(@PathVariable("hotelId") int id) {
         this.hotelService.removeHotel(id);
 
-        return "redirect:/hotels/";
+        return "redirect:/users/";
     }
 
-    @RequestMapping("edit/{hotelId}")
+    /*@RequestMapping("edit/{hotelId}")
     public String editHotel(@PathVariable("hotelId") int id, Model model) {
         model.addAttribute("hotel", this.hotelService.getHotelById(id));
         model.addAttribute("getAllHotels", this.hotelService.getAllHotels());
 
         return "/WEB-INF/hotels.jsp";
-    }
+    }*/
 
 
 
@@ -64,8 +64,6 @@ public class adminController {
         model.addAttribute("getAllUsers", this.userService.getAllUsers());
         model.addAttribute("hotel", new Hotel());
         model.addAttribute("getAllHotelId", this.hotelService.getAllHotels());
-
-
         return "users";
     }
 
@@ -77,11 +75,11 @@ public class adminController {
         return "redirect:/users/";
     }
 
-    @RequestMapping(value = "addManager/{userId}/{hotelId}")
+    @RequestMapping(value = "/users/addManager", method = RequestMethod.POST)
     @Transactional
-    public String addManager(@PathVariable("userId") long userid,@PathVariable("hotelId") int hotelid){
-        User user = this.userService.getUserById(userid);
-        Hotel hotel = this.hotelService.getHotelById(hotelid);
+    public String addManager(@RequestParam("HotelInfo") String hotelInfo,@RequestParam("Username") String username){
+        User user = this.userService.findByUsername(username);
+        Hotel hotel = this.hotelService.findByInfo(hotelInfo);
         user.setAttachedHotel(hotel);
         Role role =  new Role();
         role.setId(3);
