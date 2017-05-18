@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,5 +54,10 @@ public class TouristController {
         bookingService.addBookingToRoom(user, dateSQL, room);
         return "redirect:/tourist/";
     }
-
+    @RequestMapping(value = "/tourist/choose", method = RequestMethod.POST)
+    public String tourist(Model model, @RequestParam("choosehotel") String hotelInfo) {
+        model.addAttribute("hotel", this.hotelService.findByHotelInfo(hotelInfo));
+        model.addAttribute("getRoomsInHotel", this.roomService.getRoomByHotel(hotelService.findByHotelInfo(hotelInfo)));
+        return "tourist";
+    }
 }

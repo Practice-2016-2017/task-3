@@ -1,3 +1,4 @@
+<%@ page import="com.roi.model.Hotel" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -16,8 +17,6 @@
 
 <body>
 
-<a href="${contextPath}/welcome">Back to main menu</a>
-
 <div class="container">
     <c:if test="${pageContext.request.userPrincipal.name != null}">
         <form id="logoutForm" method="post" action="${contextPath}/logout">
@@ -28,30 +27,41 @@
     </c:if>
 </div>
 
+<c:url var="chooseAction" value="/tourist/choose"/>
+<form:form action="${chooseAction}">
+    <select name = "choosehotel">
+        <c:forEach items = "${getAllHotels}" var = "hotel">
+            <option value="${hotel.info}">${hotel.info}</option>
+        </c:forEach>
+    </select>
+    <p><input type ="submit" value="submit"></p>
+</form:form>
+
+
 <c:url var="addAction" value="/tourist/addBooking"/>
 <form:form action="${addAction}" >
     <table>
-        <tbody>
+        <tr>
+            <td><input type="date" name="date" /></td>
+        </tr>
         <tr>
             <td>
                 <select name="rooms">
-                    <c:forEach items="${getAllRooms}" var="room">
+                    <c:forEach items="${getRoomsInHotel}" var="room">
                         <option  value="${room.roomId}" >${room.roomNum} </option>
                     </c:forEach>
                 </select>
             </td>
         </tr>
         <tr>
-            <td><input type="date" name="date" /></td>
-        </tr>
-        <tr>
             <td>
             <input type="submit" value="<spring:message text="Add Booking"/>"/>
             </td>
         </tr>
-        </tbody>
     </table>
 </form:form>
+
+
 
 </body>
 </html>

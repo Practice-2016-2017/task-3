@@ -10,7 +10,10 @@ import java.util.List;
 
 @Service
 public class HotelServiceImpl implements HotelService {
-
+    @Override
+    public Hotel findByHotelInfo(String hotelInfo) {
+        return hotelDao.findByInfo(hotelInfo);
+    }
 
     @Autowired
     private HotelDao hotelDao;

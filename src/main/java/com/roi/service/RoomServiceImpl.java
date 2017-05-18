@@ -34,6 +34,18 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    public List<Room> getRoomsInHotel(Hotel hotel) {
+        List<Room> rooms = roomDao.findAll();
+        Iterator iter = rooms.iterator();
+        while (iter.hasNext()) {
+            Room room = (Room)iter.next();
+            if(!room.getHotel().getHotelId().equals(hotel.getHotelId()))
+                iter.remove();
+        }
+        return rooms;
+    }
+
+    @Override
     @Transactional
     public void addRoomToHotel(Hotel hotel){
         Integer max = 0;
