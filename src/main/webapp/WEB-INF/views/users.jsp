@@ -11,7 +11,7 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<a href="${contextPath}/welcome">Back to main menu</a>
+<a href="${contextPath}/admin">Back to main menu</a>
 
 <br/>
 <br/>
@@ -37,6 +37,7 @@
 
 <c:url var="addAction1" value="/users/addH"/>
 <p></p>
+
 <form:form action="${addAction1}" commandName="hotel">
     <table>
         <tr>
@@ -73,15 +74,15 @@
         <c:forEach items="${getAllNotAdmins}" var="user">
 
 
-                <tr>
-                    <td>${user.id}</td>
-                    <td>${user.username}</td>
-                    <td><a href="<c:url value='/removeUser/${user.id}'/>">Delete</a></td>
-                    <c:if test="${user.attachedHotel ne null}">
-                        <td>${user.attachedHotel.info}</td>
-                    </c:if>
+            <tr>
+                <td>${user.id}</td>
+                <td>${user.username}</td>
+                <td><a href="<c:url value='/removeUser/${user.id}'/>">Delete</a></td>
+                <c:if test="${user.attachedHotel ne null}">
+                    <td>${user.attachedHotel.info}</td>
+                </c:if>
 
-                </tr>
+            </tr>
 
 
         </c:forEach>
@@ -91,7 +92,8 @@
 
     <c:url var="addAction2" value="/users/addManager"/>
 <p></p>
-<form:form action="${addAction2}" commandName="hotel">    <label>
+<form:form action="${addAction2}" commandName="hotel">
+    <label>
         <select name="HotelInfo">
             <c:forEach items="${getAllHotelId}" var="hotel">
                 <option value="${hotel.info}">${hotel.info}</option>
@@ -108,6 +110,6 @@
     </label>
 
     <input type="submit" value="<spring:message text="Add manager"/>"/>
-    </form:form>
+</form:form>
 </body>
 </html>

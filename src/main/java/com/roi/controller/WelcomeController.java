@@ -10,12 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Created by Anatoly Shelikhovsky
- * Date: 15.05.2017
- * Time: 22:45
- * hotel
- */
+
 @Controller
 public class WelcomeController {
 

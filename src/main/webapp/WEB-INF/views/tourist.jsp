@@ -1,5 +1,8 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
+<%@ page session="false" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -24,6 +27,31 @@
         </h2>
     </c:if>
 </div>
+
+<c:url var="addAction" value="/tourist/addBooking"/>
+<form:form action="${addAction}" >
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <select name="rooms">
+                    <c:forEach items="${getAllRooms}" var="room">
+                        <option  value="${room.roomId}" >${room.roomNum} </option>
+                    </c:forEach>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="date" name="date" /></td>
+        </tr>
+        <tr>
+            <td>
+            <input type="submit" value="<spring:message text="Add Booking"/>"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form:form>
 
 </body>
 </html>

@@ -31,7 +31,6 @@ public class RoomServiceImpl implements RoomService {
                 iter.remove();
         }
         return roomList;
-
     }
 
     @Override
@@ -53,7 +52,16 @@ public class RoomServiceImpl implements RoomService {
         roomToAdd.setHotel(hotel);
         roomToAdd.setRoomNum(max);
         roomDao.saveAndFlush(roomToAdd);
+    }
 
+    @Override
+    public Room getRoomById(int id) {
+        return roomDao.findOne(id);
+    }
+
+    @Override
+    public List<Room> getAllRooms() {
+        return roomDao.findAll();
     }
 
 

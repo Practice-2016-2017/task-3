@@ -1,7 +1,6 @@
 package com.roi.model;
 
 import javax.persistence.*;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -30,6 +29,17 @@ public class User {
     @JoinColumn(name = "hotelId")
     private Hotel attachedHotel;
 
+
+    public Set<Booking> getBooking() {
+        return booking;
+    }
+
+    public void setBooking(Set<Booking> booking) {
+        this.booking = booking;
+    }
+
+    @OneToMany(mappedBy = "user")
+    private Set<Booking> booking;
 
     @ManyToMany
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),

@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * controller for {@link com.roi.model.User}
- *
- * Created by alexander-k on 12.04.17.
  */
 
 @Controller
-public class UserController {
+public class LoginController {
 
     @Autowired
     private UserService userService;
@@ -36,8 +34,6 @@ public class UserController {
 
     @Autowired
     private RoomService roomService;
-
-
 
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -92,13 +88,14 @@ public class UserController {
         String name = auth.getName(); //get logged in username
         Hotel currentHotel = userService.findByUsername(name).getAttachedHotel();
         model.addAttribute("attachedHotel", currentHotel.getInfo());
-        model.addAttribute("Rooms",roomService.getRoomByHotel(currentHotel));
+        model.addAttribute("Rooms", roomService.getRoomByHotel(currentHotel));
         return "manager";
     }
 
 
     @RequestMapping(value = "/tourist", method = RequestMethod.GET)
     public String tourist(Model model) {
+        model.addAttribute("getAllRooms", this.roomService.getAllRooms());
         return "tourist";
     }
 }

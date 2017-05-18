@@ -1,6 +1,7 @@
 package com.roi.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "room")
@@ -17,6 +18,9 @@ public class Room {
     @JoinColumn(name = "hotelId")
     private Hotel hotel;
 
+
+    @OneToMany(mappedBy = "room")
+    private Set<Booking> booking;
 
     public Room(){}
 
