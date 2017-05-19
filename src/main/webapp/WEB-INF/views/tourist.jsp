@@ -67,10 +67,6 @@
 </c:if>
 
 
-
-
-
-
 <c:if test="${!empty getAvailableRooms}">
     <c:url var="chooseAction2" value="/tourist/addBooking/${chosenDate}"/>
     <form:form action="${chooseAction2}">
@@ -88,13 +84,6 @@
 
 </form:form>
 </c:if>
-
-
-
-
-
-
-
 
 </body>
 </html>

@@ -3,7 +3,6 @@ package com.roi.service;
 
 import com.roi.dao.BookingDao;
 import com.roi.dao.HotelDao;
-import com.roi.dao.RoomDao;
 import com.roi.model.Booking;
 import com.roi.model.Hotel;
 import com.roi.model.Room;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -43,62 +41,37 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public List<Booking> getBookingByRoom(Room room) {
         List<Booking> bookingList = bookingDao.findAll();
-        Iterator iter = bookingList.iterator();
-        while (iter.hasNext()) {
-            Booking booking = (Booking) iter.next();
-            if (!booking.getRoom().getRoomId().equals(room.getRoomId()))
-                iter.remove();
-        }
+        bookingList.removeIf(booking -> !booking.getRoom().getRoomId().equals(room.getRoomId()));
         return bookingList;
     }
 
     @Override
     @Transactional
-    public List<Hotel> getHotelsByDate(Date date){
-        List<Booking> bookingList = bookingDao.findAll();
+    public List<Hotel> getHotelsByDate(Date date) {
+        bookingDao.findAll();
         List<Hotel> hotels = hotelDao.findAll();
-        ArrayList<Integer> hotelsToRemove = new ArrayList<Integer>();
-        Iterator iter = hotels.iterator();
-        while (iter.hasNext()) {
-            Hotel hotel = (Hotel) iter.next();
-            if(getRoomByDateAndHotel(date,hotel).isEmpty()){
-                iter.remove();
-            }
-        }
+        hotels.removeIf(hotel -> getRoomByDateAndHotel(date, hotel).isEmpty());
 
         return hotels;
 
-        }
+    }
 
 
     @Override
     @Transactional
-    public List<Room> getRoomByDateAndHotel(Date date, Hotel hotel){
+    public List<Room> getRoomByDateAndHotel(Date date, Hotel hotel) {
+        java.sql.Date dateSQL = new java.sql.Date(date.getTime());
         List<Room> rooms = roomService.getRoomsInHotel(hotel);
         List<Booking> bookingList = bookingDao.findAll();
-        ArrayList<Integer> roomsToRemove = new ArrayList<Integer>();
-
-        Iterator iter = bookingList.iterator();
-
-        while (iter.hasNext()) {
-            Booking booking = (Booking) iter.next();
+        ArrayList<Integer> roomsToRemove = new ArrayList<>();
+        for (Booking booking : bookingList) {
             Date date1 = booking.getDate();
-
-            if( (!roomsToRemove.contains(booking.getRoom().getRoomId())) & date1.getDay()==date.getDay() & date1.getYear()==date.getYear() & date1.getMonth()==date.getMonth()){
+            if ((!roomsToRemove.contains(booking.getRoom().getRoomId())) && dateSQL.equals(date1)/*date1.getDay() == date.getDay() && date1.getYear() == date.getYear() && date1.getMonth() == date.getMonth()*/) {
                 roomsToRemove.add(booking.getRoom().getRoomId());
             }
 
         }
-
-        iter = rooms.iterator();
-        while (iter.hasNext()) {
-            Room room = (Room) iter.next();
-            if(roomsToRemove.contains(room.getRoomId())){
-                iter.remove();
-            }
-
-        }
-
+        rooms.removeIf(room -> roomsToRemove.contains(room.getRoomId()));
         return rooms;
 
     }

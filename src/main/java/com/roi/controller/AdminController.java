@@ -2,14 +2,10 @@ package com.roi.controller;
 
 import com.roi.model.Hotel;
 import com.roi.model.Role;
-import com.roi.model.Room;
 import com.roi.model.User;
 import com.roi.service.HotelService;
-import com.roi.service.RoomService;
 import com.roi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,17 +24,6 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RoomService roomService;
-
-
-    /*@RequestMapping(value = "hotels", method = RequestMethod.GET)
-    public String getAllHotels(Model model) {
-        model.addAttribute("hotel", new Hotel());
-        model.addAttribute("getAllHotels", this.hotelService.getAllHotels());
-
-        return "users";
-    }*/
 
     @RequestMapping(value = "/users/addH", method = RequestMethod.POST)
     public String addHotel(@RequestParam("info") String str) {
@@ -54,15 +39,6 @@ public class AdminController {
 
         return "redirect:/users/";
     }
-
-    /*@RequestMapping("edit/{hotelId}")
-    public String editHotel(@PathVariable("hotelId") int id, Model model) {
-        model.addAttribute("hotel", this.hotelService.getHotelById(id));
-        model.addAttribute("getAllHotels", this.hotelService.getAllHotels());
-
-        return "/WEB-INF/hotels.jsp";
-    }*/
-
 
 
     @RequestMapping(value = "users", method = RequestMethod.GET)
@@ -84,15 +60,13 @@ public class AdminController {
     }
 
 
-
-
     @RequestMapping(value = "/users/addManager", method = RequestMethod.POST)
     @Transactional
-    public String addManager(@RequestParam("HotelInfo") String hotelInfo,@RequestParam("Username") String username){
+    public String addManager(@RequestParam("HotelInfo") String hotelInfo, @RequestParam("Username") String username) {
         User user = this.userService.findByUsername(username);
         Hotel hotel = this.hotelService.findByInfo(hotelInfo);
         user.setAttachedHotel(hotel);
-        Role role =  new Role();
+        Role role = new Role();
         role.setId(3);
         role.setName("ROLE_MANAGER");
         user.getRoles().add(role);

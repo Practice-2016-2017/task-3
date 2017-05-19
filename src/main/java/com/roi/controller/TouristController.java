@@ -67,12 +67,9 @@ public class TouristController {
         java.sql.Date dateSQL = new java.sql.Date(dateUtil.getTime());
 
         model.addAttribute("getHotelsByDate", this.bookingService.getHotelsByDate(dateSQL));
-        //model.addAttribute("getRoomsInHotel", this.roomService.getRoomByHotel(hotelService.findByHotelInfo(hotelInfo)));
         model.addAttribute("chosenDate",dateSQL.toString());
         return "tourist";
     }
-
-
 
 
 
