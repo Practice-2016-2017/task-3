@@ -27,39 +27,72 @@
     </c:if>
 </div>
 
+
 <c:url var="chooseAction" value="/tourist/choose"/>
 <form:form action="${chooseAction}">
-    <select name = "choosehotel">
-        <c:forEach items = "${getAllHotels}" var = "hotel">
-            <option value="${hotel.info}">${hotel.info}</option>
-        </c:forEach>
-    </select>
+
+    <tr>
+        <td><input type="date" name="date" /></td>
+    </tr>
     <p><input type ="submit" value="submit"></p>
 </form:form>
 
 
-<c:url var="addAction" value="/tourist/addBooking"/>
-<form:form action="${addAction}" >
-    <table>
-        <tr>
-            <td><input type="date" name="date" /></td>
-        </tr>
-        <tr>
-            <td>
-                <select name="rooms">
-                    <c:forEach items="${getRoomsInHotel}" var="room">
-                        <option  value="${room.roomId}" >${room.roomNum} </option>
-                    </c:forEach>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-            <input type="submit" value="<spring:message text="Add Booking"/>"/>
-            </td>
-        </tr>
-    </table>
+
+<c:if test="${empty getAvailableRooms}">
+<c:url var="chooseAction1" value="/tourist/hotelchoose/${chosenDate}"/>
+<form:form action="${chooseAction1}">
+
+
+
+
+
+    <c:if test="${!empty getHotelsByDate}">
+
+    <div>
+        Hotels, available for ${chosenDate}
+    </div>
+
+    <select name = "choosehotel">
+        <c:forEach items = "${getHotelsByDate}" var = "hotel">
+            <option value="${hotel.hotelId}">${hotel.info}</option>
+        </c:forEach>
+    </select>
+
+    <p><input type ="submit" value="submit"></p>
+
+    </c:if>
+
 </form:form>
+</c:if>
+
+
+
+
+
+
+<c:if test="${!empty getAvailableRooms}">
+    <c:url var="chooseAction2" value="/tourist/addBooking/${chosenDate}"/>
+    <form:form action="${chooseAction2}">
+    <div>
+        Rooms, available for ${chosenDate}
+    </div>
+
+    <select name = "chooseRoom">
+        <c:forEach items = "${getAvailableRooms}" var = "room">
+            <option value="${room.roomId}">${room.roomNum}</option>
+        </c:forEach>
+    </select>
+
+    <p><input type ="submit" value="submit"></p>
+
+</form:form>
+</c:if>
+
+
+
+
+
 
 
 
