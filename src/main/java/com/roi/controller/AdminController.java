@@ -15,16 +15,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 
+/**
+ * Controller for admin page
+ */
 @Controller
 public class AdminController {
 
-    @Autowired
-    private HotelService hotelService;
+    private final HotelService hotelService;
+
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public AdminController(HotelService hotelService, UserService userService) {
+        this.hotelService = hotelService;
+        this.userService = userService;
+    }
 
 
+    /**
+     * Add the hotel with received info
+     * @param str Info of the hotel to add
+     * @return Admin page
+     */
     @RequestMapping(value = "/users/addH", method = RequestMethod.POST)
     public String addHotel(@RequestParam("info") String str) {
         Hotel hotel = new Hotel(str);
@@ -33,6 +45,11 @@ public class AdminController {
     }
 
 
+    /**
+     * Remove the hotel by ID
+     * @param id ID of the Hotel to remove
+     * @return admin page
+     */
     @RequestMapping("/remove/{hotelId}")
     public String removeHotel(@PathVariable("hotelId") int id) {
         this.hotelService.removeHotel(id);
@@ -41,6 +58,11 @@ public class AdminController {
     }
 
 
+    /**
+     * Add attributes new user, all users, new hotel, all hotels, all users not admins to the model
+     * @param model Model to add attributes
+     * @return Admin page
+     */
     @RequestMapping(value = "users", method = RequestMethod.GET)
     public String getAllUsers(Model model) {
         model.addAttribute("user", new User());
@@ -52,6 +74,11 @@ public class AdminController {
     }
 
 
+    /**
+     * Remove the user with chosen ID
+     * @param id ID of user (not admin) to remove
+     * @return Admin page
+     */
     @RequestMapping("/removeUser/{id}")
     public String removeUser(@PathVariable("id") long id) {
         this.userService.removeUser(id);
@@ -60,6 +87,12 @@ public class AdminController {
     }
 
 
+    /**
+     * Add a manager with chosen username and hotel
+     * @param hotelInfo Hotel to add manager
+     * @param username Name of user to add hotel
+     * @return Admin page
+     */
     @RequestMapping(value = "/users/addManager", method = RequestMethod.POST)
     @Transactional
     public String addManager(@RequestParam("HotelInfo") String hotelInfo, @RequestParam("Username") String username) {

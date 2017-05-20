@@ -21,24 +21,37 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
+/**
+ * Controller for a tourist page
+ */
 @Controller
 public class TouristController {
 
-    @Autowired
-    private BookingService bookingService;
+    private final BookingService bookingService;
 
-    @Autowired
-    private HotelService hotelService;
+    private final HotelService hotelService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private RoomService roomService;
+    private final RoomService roomService;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private java.util.Date dateUtil;
 
+    @Autowired
+    public TouristController(BookingService bookingService, HotelService hotelService, UserService userService, RoomService roomService) {
+        this.bookingService = bookingService;
+        this.hotelService = hotelService;
+        this.userService = userService;
+        this.roomService = roomService;
+    }
+
+    /**
+     * Add an order for the selected date, hotel and room
+     * @param id ID of chosen room
+     * @param date Chosen Date
+     * @return Tourist page
+     */
     @RequestMapping(value = "/tourist/addBooking/{chosenDate}", method = RequestMethod.POST)
     public String addHotel(@RequestParam("chooseRoom") int id, @PathVariable("chosenDate") String date) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -56,6 +69,12 @@ public class TouristController {
         return "redirect:/tourist/";
     }
 
+    /**
+     * Add attributes chosen Date and available hotels by this date to the model
+     * @param model Model to add attributes
+     * @param date Date of booking
+     * @return Tourist page
+     */
     @RequestMapping(value = "/tourist/choose", method = RequestMethod.POST)
     public String tourist(Model model, @RequestParam("date") String date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -72,7 +91,13 @@ public class TouristController {
     }
 
 
-
+    /**
+     * Add attributes available rooms by chosen date and hotel to the model
+     * @param model Model to add attributes
+     * @param hotelId ID of chosen Hotel
+     * @param date Chosen Date
+     * @return Tourist page
+     */
    @RequestMapping(value = "/tourist/hotelchoose/{chosenDate}")
     public String chooseHotel(Model model, @RequestParam("choosehotel") int hotelId, @PathVariable("chosenDate") String date){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

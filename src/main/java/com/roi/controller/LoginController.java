@@ -6,6 +6,7 @@ import com.roi.service.HotelService;
 import com.roi.service.RoomService;
 import com.roi.service.SecurityService;
 import com.roi.service.UserService;
+import com.roi.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,20 +23,24 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final SecurityService securityService;
+
+    private final com.roi.validator.UserValidator userValidator;
+
+    private final RoomService roomService;
+
+    private final HotelService hotelService;
 
     @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private com.roi.validator.UserValidator userValidator;
-
-    @Autowired
-    private RoomService roomService;
-
-    @Autowired
-    private HotelService hotelService;
+    public LoginController(UserService userService, SecurityService securityService, UserValidator userValidator, RoomService roomService, HotelService hotelService) {
+        this.userService = userService;
+        this.securityService = securityService;
+        this.userValidator = userValidator;
+        this.roomService = roomService;
+        this.hotelService = hotelService;
+    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
