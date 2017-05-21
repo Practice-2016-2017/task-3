@@ -11,6 +11,5 @@ public interface RoomService {
     void addRoomToHotel(Hotel hotel);
     List<Room> getAllRooms();
     Room getRoomById(int id);
-    List<Room> getRoomsInHotel(Hotel hotel);
 
 }

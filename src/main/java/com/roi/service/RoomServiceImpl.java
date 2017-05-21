@@ -3,7 +3,8 @@ package com.roi.service;
 import com.roi.dao.RoomDao;
 import com.roi.model.Hotel;
 import com.roi.model.Room;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,59 +12,47 @@ import javax.transaction.Transactional;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by alexander-k on 16.05.17.
- */
 
+/**
+ * Implementation of {@link RoomService}
+ */
 @Service
 public class RoomServiceImpl implements RoomService {
-    private static final Logger log = Logger.getLogger(RoomService.class);
+    private static final Logger log = LoggerFactory.getLogger(HotelService.class);
+
+    private final RoomDao roomDao;
 
     @Autowired
-    private RoomDao roomDao;
+    public RoomServiceImpl(RoomDao roomDao) {
+        this.roomDao = roomDao;
+    }
 
     @Override
     @Transactional
-    public List<Room> getRoomByHotel(Hotel hotel){
-        log.info("Getting all rooms in hotel "+hotel.getInfo());
+    public List<Room> getRoomByHotel(Hotel hotel) {
+        log.info("Getting all rooms in hotel " + hotel.getInfo());
         List<Room> roomList = roomDao.findAll();
         Iterator iter = roomList.iterator();
-        while(iter.hasNext()) {
-            Room room = (Room)iter.next();
-            if(!room.getHotel().getHotelId().equals(hotel.getHotelId()))
+        while (iter.hasNext()) {
+            Room room = (Room) iter.next();
+            if (!room.getHotel().getHotelId().equals(hotel.getHotelId()))
                 iter.remove();
         }
         return roomList;
     }
-// кажется, этот метод уже есть выше
-    @Override
-    public List<Room> getRoomsInHotel(Hotel hotel) {
-        log.info("Getting all rooms in hotel "+hotel.getInfo());
-        List<Room> rooms = roomDao.findAll();
-        Iterator iter = rooms.iterator();
-        while (iter.hasNext()) {
-            Room room = (Room)iter.next();
-            if(!room.getHotel().getHotelId().equals(hotel.getHotelId()))
-                iter.remove();
-        }
-        return rooms;
-    }
 
     @Override
     @Transactional
-    public void addRoomToHotel(Hotel hotel){
-        log.info("Adding room to hotel "+hotel.getInfo());
+    public void addRoomToHotel(Hotel hotel) {
+        log.info("Adding room to hotel " + hotel.getInfo());
         Integer max = 0;
         List<Room> roomList = roomDao.findAll();
-        Iterator iter = roomList.iterator();
-        Room firstRoom = (Room)iter.next();
-        while(iter.hasNext()) {
-            Room room = (Room)iter.next();
-            if(room.getHotel().getHotelId().equals(hotel.getHotelId()) && max < room.getRoomNum())
+        for (Room room : roomList) {
+            if (room.getHotel().getHotelId().equals(hotel.getHotelId()) && max < room.getRoomNum())
                 max = room.getRoomNum();
         }
 
-        max+=1;
+        max += 1;
 
         Room roomToAdd = new Room();
         roomToAdd.setHotel(hotel);
@@ -73,7 +62,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room getRoomById(int id) {
-        log.info("Getting room by id "+id);
+        log.info("Getting room by id " + id);
         return roomDao.findOne(id);
     }
 

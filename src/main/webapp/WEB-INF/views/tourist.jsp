@@ -38,7 +38,7 @@
         </tr>
         <c:forEach items="${getUserBookings}" var="booking">
             <tr>
-                <td>${booking.date.toString()}</td>
+                <td>${booking.date}</td>
                 <td>${booking.room.hotel.info}</td>
                 <td>${booking.room.roomNum}</td>
                 <td><a href="<c:url value='/removeBooking/${booking.bookingId}'/>">Delete</a></td>
