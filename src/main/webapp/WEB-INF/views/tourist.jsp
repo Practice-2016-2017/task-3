@@ -28,6 +28,27 @@
 </div>
 
 
+<c:if test="${!empty getUserBookings}">
+    <table>
+        <tr>
+            <th width="80">Date</th>
+            <th width="120">Hotel</th>
+            <th width="80">Room</th>
+            <th width="80">Delete</th>
+        </tr>
+        <c:forEach items="${getUserBookings}" var="booking">
+            <tr>
+                <td>${booking.date.toString()}</td>
+                <td>${booking.room.hotel.info}</td>
+                <td>${booking.room.roomNum}</td>
+                <td><a href="<c:url value='/removeBooking/${booking.bookingId}'/>">Delete</a></td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+
+
+
 <c:url var="chooseAction" value="/tourist/choose"/>
 <form:form action="${chooseAction}">
 

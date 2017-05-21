@@ -2,10 +2,7 @@ package com.roi.controller;
 
 import com.roi.model.Hotel;
 import com.roi.model.User;
-import com.roi.service.HotelService;
-import com.roi.service.RoomService;
-import com.roi.service.SecurityService;
-import com.roi.service.UserService;
+import com.roi.service.*;
 import com.roi.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.jws.soap.SOAPBinding;
 
 /**
  * controller for {@link com.roi.model.User}
@@ -33,13 +32,16 @@ public class LoginController {
 
     private final HotelService hotelService;
 
+    private final BookingService bookingService;
+
     @Autowired
-    public LoginController(UserService userService, SecurityService securityService, UserValidator userValidator, RoomService roomService, HotelService hotelService) {
+    public LoginController(UserService userService, SecurityService securityService, UserValidator userValidator, RoomService roomService, HotelService hotelService, BookingService bookingService) {
         this.userService = userService;
         this.securityService = securityService;
         this.userValidator = userValidator;
         this.roomService = roomService;
         this.hotelService = hotelService;
+        this.bookingService = bookingService;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -101,6 +103,10 @@ public class LoginController {
 
     @RequestMapping(value = "/tourist", method = RequestMethod.GET)
     public String tourist(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        User user = userService.findByUsername(name);
+        model.addAttribute("getUserBookings",this.bookingService.getBookingsByUser(user));
         model.addAttribute("getAllRooms", this.roomService.getAllRooms());
         model.addAttribute("getAllHotels", this.hotelService.getAllHotels());
         return "tourist";

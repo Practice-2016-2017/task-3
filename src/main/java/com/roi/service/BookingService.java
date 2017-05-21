@@ -15,4 +15,6 @@ public interface BookingService {
     List<Booking> getAllBookings();
     List<Hotel> getHotelsByDate(Date date);
     List<Room> getRoomByDateAndHotel(Date date, Hotel hotel);
+    List<Booking> getBookingsByUser(User user);
+    void removeBooking(int id);
 }

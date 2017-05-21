@@ -3,6 +3,7 @@ package com.roi.service;
 import com.roi.dao.RoomDao;
 import com.roi.model.Hotel;
 import com.roi.model.Room;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 public class RoomServiceImpl implements RoomService {
+    private static final Logger log = Logger.getLogger(RoomService.class);
 
     @Autowired
     private RoomDao roomDao;
@@ -23,6 +25,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     @Transactional
     public List<Room> getRoomByHotel(Hotel hotel){
+        log.info("Getting all rooms in hotel "+hotel.getInfo());
         List<Room> roomList = roomDao.findAll();
         Iterator iter = roomList.iterator();
         while(iter.hasNext()) {
@@ -32,9 +35,10 @@ public class RoomServiceImpl implements RoomService {
         }
         return roomList;
     }
-
+// кажется, этот метод уже есть выше
     @Override
     public List<Room> getRoomsInHotel(Hotel hotel) {
+        log.info("Getting all rooms in hotel "+hotel.getInfo());
         List<Room> rooms = roomDao.findAll();
         Iterator iter = rooms.iterator();
         while (iter.hasNext()) {
@@ -48,6 +52,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     @Transactional
     public void addRoomToHotel(Hotel hotel){
+        log.info("Adding room to hotel "+hotel.getInfo());
         Integer max = 0;
         List<Room> roomList = roomDao.findAll();
         Iterator iter = roomList.iterator();
@@ -68,11 +73,13 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room getRoomById(int id) {
+        log.info("Getting room by id "+id);
         return roomDao.findOne(id);
     }
 
     @Override
     public List<Room> getAllRooms() {
+        log.info("Getting all rooms");
         return roomDao.findAll();
     }
 

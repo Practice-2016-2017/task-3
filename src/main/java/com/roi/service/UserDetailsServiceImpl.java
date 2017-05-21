@@ -3,6 +3,7 @@ package com.roi.service;
 import com.roi.dao.UserDao;
 import com.roi.model.Role;
 import com.roi.model.User;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +23,7 @@ import java.util.Set;
  */
 
 public class UserDetailsServiceImpl implements UserDetailsService {
+    private static final Logger log = Logger.getLogger(UserDetailsService.class);
 
     @Autowired
     private UserDao userDao;
@@ -29,10 +31,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional( readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("Loading user by username "+username);
         User user = userDao.findByUsername(username);
-
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-
         for (Role role : user.getRoles()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
         }

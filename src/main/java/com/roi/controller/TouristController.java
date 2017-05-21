@@ -111,4 +111,11 @@ public class TouristController {
         model.addAttribute("getAvailableRooms", bookingService.getRoomByDateAndHotel(dateSQL, hotelService.getHotelById(hotelId)));
         return "tourist";
     }
+
+    @RequestMapping("/removeBooking/{id}")
+    public String removeUser(@PathVariable("id") int id) {
+        this.bookingService.removeBooking(id);
+        return "redirect:/tourist/";
+    }
+
 }
