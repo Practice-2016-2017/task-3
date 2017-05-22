@@ -4,6 +4,8 @@ import com.roi.model.Hotel;
 import com.roi.model.User;
 import com.roi.service.*;
 import com.roi.validator.UserValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +24,7 @@ import javax.jws.soap.SOAPBinding;
 @Controller
 public class LoginController {
 
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
     private final UserService userService;
 
     private final SecurityService securityService;
@@ -49,6 +52,7 @@ public class LoginController {
         model.addAttribute("userForm", new User());
 
         return "registration";
+
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
@@ -58,11 +62,11 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-
+        log.info("Starting registration");
         userService.save(userForm);
 
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
-
+        log.info("Done successfully  ");
         return "redirect:/welcome";
     }
 
@@ -86,12 +90,14 @@ public class LoginController {
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin(Model model) {
+        log.info("Starting to log in as admin");
         return "admin";
     }
 
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
     @Transactional
     public String manager(Model model) {
+        log.info("Starting to log in as manager");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         Hotel currentHotel = userService.findByUsername(name).getAttachedHotel();
@@ -106,7 +112,8 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         User user = userService.findByUsername(name);
-        model.addAttribute("getUserBookings",this.bookingService.getBookingsByUser(user));
+        log.info("Starting to log in as tourist");
+        model.addAttribute("getUserBookings", this.bookingService.getBookingsByUser(user));
         model.addAttribute("getAllRooms", this.roomService.getAllRooms());
         model.addAttribute("getAllHotels", this.hotelService.getAllHotels());
         return "tourist";

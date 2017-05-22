@@ -6,6 +6,8 @@ import com.roi.service.BookingService;
 import com.roi.service.HotelService;
 import com.roi.service.RoomService;
 import com.roi.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
@@ -26,6 +28,8 @@ import java.text.SimpleDateFormat;
  */
 @Controller
 public class TouristController {
+
+    private static final Logger log = LoggerFactory.getLogger(TouristController.class);
 
     private final BookingService bookingService;
 
@@ -48,7 +52,8 @@ public class TouristController {
 
     /**
      * Add an order for the selected date, hotel and room
-     * @param id ID of chosen room
+     *
+     * @param id   ID of chosen room
      * @param date Chosen Date
      * @return Tourist page
      */
@@ -65,14 +70,17 @@ public class TouristController {
             e.printStackTrace();
         }
         java.sql.Date dateSQL = new java.sql.Date(dateUtil.getTime());
+        log.info("Starting to add an order for room with id" + id + "for the date" + date);
         bookingService.addBookingToRoom(user, dateSQL, room);
+        log.info("Done successfully  ");
         return "redirect:/tourist/";
     }
 
     /**
      * Add attributes chosen Date and available hotels by this date to the model
+     *
      * @param model Model to add attributes
-     * @param date Date of booking
+     * @param date  Date of booking
      * @return Tourist page
      */
     @RequestMapping(value = "/tourist/choose", method = RequestMethod.POST)
@@ -86,20 +94,21 @@ public class TouristController {
         java.sql.Date dateSQL = new java.sql.Date(dateUtil.getTime());
 
         model.addAttribute("getHotelsByDate", this.bookingService.getHotelsByDate(dateSQL));
-        model.addAttribute("chosenDate",dateSQL.toString());
+        model.addAttribute("chosenDate", dateSQL.toString());
         return "tourist";
     }
 
 
     /**
      * Add attributes available rooms by chosen date and hotel to the model
-     * @param model Model to add attributes
+     *
+     * @param model   Model to add attributes
      * @param hotelId ID of chosen Hotel
-     * @param date Chosen Date
+     * @param date    Chosen Date
      * @return Tourist page
      */
-   @RequestMapping(value = "/tourist/hotelchoose/{chosenDate}")
-    public String chooseHotel(Model model, @RequestParam("choosehotel") int hotelId, @PathVariable("chosenDate") String date){
+    @RequestMapping(value = "/tourist/hotelchoose/{chosenDate}")
+    public String chooseHotel(Model model, @RequestParam("choosehotel") int hotelId, @PathVariable("chosenDate") String date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             dateUtil = format.parse(date);
@@ -107,14 +116,17 @@ public class TouristController {
             e.printStackTrace();
         }
         java.sql.Date dateSQL = new java.sql.Date(dateUtil.getTime());
-
         model.addAttribute("getAvailableRooms", bookingService.getRoomByDateAndHotel(dateSQL, hotelService.getHotelById(hotelId)));
         return "tourist";
     }
 
     @RequestMapping("/removeBooking/{id}")
     public String removeUser(@PathVariable("id") int id) {
+        log.info("Starting to remove user with id " + id);
+
         this.bookingService.removeBooking(id);
+        log.info("Done successfully  ");
+
         return "redirect:/tourist/";
     }
 

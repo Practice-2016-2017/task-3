@@ -21,7 +21,7 @@ import java.util.Set;
  */
 
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private static final Logger log = LoggerFactory.getLogger(HotelService.class);
+    private static final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
 
     private final UserDao userDao;
 

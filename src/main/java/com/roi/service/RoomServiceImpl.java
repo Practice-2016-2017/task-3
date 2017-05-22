@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Service
 public class RoomServiceImpl implements RoomService {
-    private static final Logger log = LoggerFactory.getLogger(HotelService.class);
+    private static final Logger log = LoggerFactory.getLogger(RoomService.class);
 
     private final RoomDao roomDao;
 

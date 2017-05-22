@@ -5,6 +5,8 @@ import com.roi.model.Role;
 import com.roi.model.User;
 import com.roi.service.HotelService;
 import com.roi.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import javax.transaction.Transactional;
  */
 @Controller
 public class AdminController {
+    private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 
     private final HotelService hotelService;
 
@@ -39,8 +42,10 @@ public class AdminController {
      */
     @RequestMapping(value = "/users/addH", method = RequestMethod.POST)
     public String addHotel(@RequestParam("info") String str) {
+        log.info("Starting to add new hotel " + str);
         Hotel hotel = new Hotel(str);
         this.hotelService.addHotel(hotel);
+        log.info("Done successfully  ");
         return "redirect:/users/";
     }
 
@@ -52,7 +57,9 @@ public class AdminController {
      */
     @RequestMapping("/remove/{hotelId}")
     public String removeHotel(@PathVariable("hotelId") int id) {
+        log.info("Starting to remove hotel with id" + id);
         this.hotelService.removeHotel(id);
+        log.info("Done successfully  " );
 
         return "redirect:/users/";
     }
@@ -70,6 +77,7 @@ public class AdminController {
         model.addAttribute("hotel", new Hotel());
         model.addAttribute("getAllHotelId", this.hotelService.getAllHotels());
         model.addAttribute("getAllNotAdmins", this.userService.getAllNotAdmins());
+        log.info("Starting to get all users" );
         return "users";
     }
 
@@ -81,8 +89,9 @@ public class AdminController {
      */
     @RequestMapping("/removeUser/{id}")
     public String removeUser(@PathVariable("id") long id) {
+        log.info("Starting to remove user with id" + id);
         this.userService.removeUser(id);
-
+        log.info("Done successfully  " );
         return "redirect:/users/";
     }
 
@@ -103,7 +112,9 @@ public class AdminController {
         role.setId(3);
         role.setName("ROLE_MANAGER");
         user.getRoles().add(role);
+        log.info("Starting to add Manager" + username + " to the hotel" + hotelInfo);
         this.userService.editUser(user);
+        log.info("Done successfully  " );
 
         return "redirect:/users";
 

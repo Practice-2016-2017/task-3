@@ -2,6 +2,8 @@ package com.roi.controller;
 
 import com.roi.service.RoomService;
 import com.roi.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +20,7 @@ import javax.transaction.Transactional;
  */
 @Controller
 public class ManagerController {
-
+    private static final Logger log = LoggerFactory.getLogger(ManagerController.class);
 
     private final UserService userService;
 
@@ -42,7 +44,7 @@ public class ManagerController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         model.addAttribute("username", name);
-
+        log.info("Starting to add room ");
         roomService.addRoomToHotel(userService.findByUsername(name).getAttachedHotel());
 
         return "redirect:/manager/";

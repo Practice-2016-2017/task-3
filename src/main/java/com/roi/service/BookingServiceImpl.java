@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Service
 public class BookingServiceImpl implements BookingService {
-    private static final Logger log = LoggerFactory.getLogger(HotelService.class);
+    private static final Logger log = LoggerFactory.getLogger(BookingService.class);
 
     private final BookingDao bookingDao;
 
