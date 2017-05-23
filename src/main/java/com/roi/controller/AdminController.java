@@ -56,9 +56,18 @@ public class AdminController {
      * @return admin page
      */
     @RequestMapping("/remove/{hotelId}")
-    public String removeHotel(@PathVariable("hotelId") int id) {
+    public String removeHotel(Model model, @PathVariable("hotelId") int id)  {
         log.info("Starting to remove hotel with id" + id);
-        this.hotelService.removeHotel(id);
+        try {
+            this.hotelService.removeHotel(id);
+
+
+        }
+        catch (Exception ex){
+            return "redirect:/errorPage/ERROR!";
+
+
+        }
         log.info("Done successfully  " );
 
         return "redirect:/users/";

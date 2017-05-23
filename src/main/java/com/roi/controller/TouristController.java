@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 
 /**
@@ -85,6 +86,8 @@ public class TouristController {
      */
     @RequestMapping(value = "/tourist/choose", method = RequestMethod.POST)
     public String tourist(Model model, @RequestParam("date") String date) {
+        if(Objects.equals(date, ""))
+            return "redirect:/tourist/";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             dateUtil = format.parse(date);
