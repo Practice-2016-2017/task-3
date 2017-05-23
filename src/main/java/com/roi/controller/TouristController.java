@@ -74,10 +74,10 @@ public class TouristController {
         }
         java.sql.Date dateSQL = new java.sql.Date(dateUtil.getTime());
         log.info("Starting to add an order for room with id" + id + "for the date" + date);
-        if(bookingService.checkBookingByRoomAndDate(room.getRoomId(),dateSQL)){
-        bookingService.addBookingToRoom(user, dateSQL, room);
-        log.info("Done successfully  ");}
-        else {
+        if (bookingService.checkBookingByRoomAndDate(room.getRoomId(), dateSQL)) {
+            bookingService.addBookingToRoom(user, dateSQL, room);
+            log.info("Done successfully  ");
+        } else {
             return "redirect:/errorPage/This booking is unavailable";
         }
         return "redirect:/tourist/";
@@ -92,7 +92,7 @@ public class TouristController {
      */
     @RequestMapping(value = "/tourist/choose", method = RequestMethod.POST)
     public String tourist(Model model, @RequestParam("date") String date) {
-        if(Objects.equals(date, ""))
+        if (Objects.equals(date, ""))
             return "redirect:/tourist/";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -140,18 +140,17 @@ public class TouristController {
 
         log.info("Starting to remove booking with id " + id);
 
-        if(this.bookingService.getBookingById(id) == null)
-        {
-            return "redirect:/errorPage/Such booking does not exist";}
-        else {
-            if(!Objects.equals(this.bookingService.getBookingById(id).getUser().getId(), user.getId())){
+        if (this.bookingService.getBookingById(id) == null) {
+            return "redirect:/errorPage/Such booking does not exist";
+        } else {
+            if (!Objects.equals(this.bookingService.getBookingById(id).getUser().getId(), user.getId())) {
                 return "redirect:/errorPage/Access to this operation is forbidden";
 
             }
 
         }
-            this.bookingService.removeBooking(id);
-            log.info("Done successfully  ");
+        this.bookingService.removeBooking(id);
+        log.info("Done successfully  ");
 
         return "redirect:/tourist/";
 

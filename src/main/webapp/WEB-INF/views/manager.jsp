@@ -19,7 +19,7 @@
         <form id="logoutForm" method="post" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-        <h2>Manager Page ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+        <h2>Manager Page ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()" style="color: green">Logout</a>
         </h2>
 
     </c:if>
@@ -35,13 +35,13 @@ You work at ${attachedHotel}
 <c:if test="${!empty Rooms}">
     <table>
         <tr>
-            <th width="80">ID</th>
-            <th width="80">Room Number</th>
+            <th width="60" align="center">ID</th>
+            <th width="60" align="center">Room Number</th>
         </tr>
         <c:forEach items="${Rooms}" var="room">
             <tr>
-                <td>${room.roomId}</td>
-                <td>${room.roomNum}</td>
+                <td width="60" align="center">${room.roomId}</td>
+                <td width="60" align="center">${room.roomNum}</td>
             </tr>
         </c:forEach>
     </table>

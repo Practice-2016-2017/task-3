@@ -22,7 +22,7 @@
         <form id="logoutForm" method="post" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-        <h2><p>User Page</p> ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+        <h2><p>User Page</p> ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()" style="color: green">Logout</a>
         </h2>
     </c:if>
 </div>
@@ -31,17 +31,17 @@
 <c:if test="${!empty getUserBookings}">
     <table>
         <tr>
-            <th width="80">Date</th>
-            <th width="120">Hotel</th>
-            <th width="80">Room</th>
-            <th width="80">Delete</th>
+            <th width="115" align="center">Date</th>
+            <th width="150"align="center">Hotel</th>
+            <th width="60"align="center">Room</th>
+            <th width="60"align="center">Delete</th>
         </tr>
         <c:forEach items="${getUserBookings}" var="booking">
             <tr>
-                <td>${booking.date}</td>
-                <td>${booking.room.hotel.info}</td>
-                <td>${booking.room.roomNum}</td>
-                <td><a href="<c:url value='/removeBooking/${booking.bookingId}'/>">Delete</a></td>
+                <td width="115" align="center">${booking.date.toString().substring(0, 10)}</td>
+                <td width="150" align="center">${booking.room.hotel.info}</td>
+                <td width="60" align="center">${booking.room.roomNum}</td>
+                <td width="60" align="center"><a href="<c:url value='/removeBooking/${booking.bookingId}'/>">Delete</a></td>
             </tr>
         </c:forEach>
     </table>

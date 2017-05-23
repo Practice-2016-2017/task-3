@@ -73,7 +73,7 @@ public class BookingServiceImpl implements BookingService {
         log.info("Creating a list of available rooms in hotel " + hotel.getInfo() + " for date " + date.toString());
         for (Booking booking : bookingList) {
             Date date1 = booking.getDate();
-            if ((!roomsToRemove.contains(booking.getRoom().getRoomId())) && dateSQL.equals(date1)/*date1.getDay() == date.getDay() && date1.getYear() == date.getYear() && date1.getMonth() == date.getMonth()*/) {
+            if ((!roomsToRemove.contains(booking.getRoom().getRoomId())) && dateSQL.equals(date1)) {
                 roomsToRemove.add(booking.getRoom().getRoomId());
             }
         }
@@ -101,14 +101,15 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional
     public Boolean checkBookingByRoomAndDate(int roomId, Date date) {
+        java.sql.Date dateSQL = new java.sql.Date(date.getTime());
         List<Booking> bookingList = bookingDao.findAll();
-        bookingList.removeIf(booking -> (!booking.getRoom().getRoomId().equals(roomId) || !(booking.getDate().getYear() == date.getYear() &  booking.getDate().getDay() == date.getDay() & booking.getDate().getMonth() == date.getMonth())));
+        bookingList.removeIf(booking -> (!booking.getRoom().getRoomId().equals(roomId) || !dateSQL.equals(booking.getDate())));
         return bookingList.isEmpty();
     }
 
     @Override
     @Transactional
-    public Booking getBookingById(int id){
+    public Booking getBookingById(int id) {
         return bookingDao.findOne(id);
     }
 
