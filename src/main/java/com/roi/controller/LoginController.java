@@ -47,6 +47,12 @@ public class LoginController {
         this.bookingService = bookingService;
     }
 
+
+    /**
+     * Add user form to attributes of registration page
+     * @param model Model to add attributes
+     * @return registration page
+     */
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
@@ -55,6 +61,13 @@ public class LoginController {
 
     }
 
+    /**
+     * Try to add new registered user
+     * @param model Model to add attributes
+     * @param bindingResult binding result
+     * @param userForm user data suggested to register
+     * @return redirect to Welcome page or back to registration page in case of error
+     */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
         userValidator.validate(userForm, bindingResult);
@@ -70,6 +83,13 @@ public class LoginController {
         return "redirect:/welcome";
     }
 
+    /**
+     * Add message about correct logout or about error during logging to login page
+     * @param model Model to add attributes
+     * @param error error flag
+     * @param logout logout flag
+     * @return login page
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
         if (error != null) {
@@ -83,16 +103,33 @@ public class LoginController {
         return "login";
     }
 
+    /**
+     * Add attributes to welcome page
+     * @param model Model to add attributes
+     * @return Welcome page
+     */
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         return "welcome";
     }
 
+
+    /**
+     * Add attributes to admin page
+     * @param model Model to add attributes
+     * @return Admin page
+     */
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin(Model model) {
         log.info("Starting to log in as admin");
         return "admin";
     }
+
+    /**
+     * Add attributes user's attached hotel, rooms in attached hotel to manager page
+     * @param model Model to add attributes
+     * @return Manager page
+     */
 
     @RequestMapping(value = "/manager", method = RequestMethod.GET)
     @Transactional
@@ -107,6 +144,11 @@ public class LoginController {
     }
 
 
+    /**
+     * Add attribute list of user's bookings to tourist page
+     * @param model Model to add attributes
+     * @return Tourist page
+     */
     @RequestMapping(value = "/tourist", method = RequestMethod.GET)
     public String tourist(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -114,8 +156,6 @@ public class LoginController {
         User user = userService.findByUsername(name);
         log.info("Starting to log in as tourist");
         model.addAttribute("getUserBookings", this.bookingService.getBookingsByUser(user));
-        model.addAttribute("getAllRooms", this.roomService.getAllRooms());
-        model.addAttribute("getAllHotels", this.hotelService.getAllHotels());
         return "tourist";
     }
 }
