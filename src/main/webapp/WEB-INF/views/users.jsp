@@ -22,13 +22,13 @@
     <table>
         <tr>
             <th width="40" align="center">ID</th>
-            <th width="150" align="center">Info</th>
+            <th width="170" align="center">Info</th>
             <th width="60" align="center">Delete</th>
         </tr>
         <c:forEach items="${getAllHotelId}" var="hotel">
             <tr>
                 <td width="40" align="center">${hotel.hotelId}</td>
-                <td width="150" align="center">${hotel.info}</td>
+                <td width="170" align="center">${hotel.info}</td>
                 <td width="60" align="center"><a href="<c:url value='/remove/${hotel.hotelId}'/>">Delete</a></td>
             </tr>
         </c:forEach>
@@ -69,7 +69,7 @@
             <th width="40" align="center">ID</th>
             <th width="100" align="center">Name</th>
             <th width="60" align="center">Delete</th>
-            <th width="150" align="center">Manager of</th>
+            <th width="170" align="center">Manager of</th>
         </tr>
         <c:forEach items="${getAllNotAdmins}" var="user">
 
@@ -79,7 +79,7 @@
                 <td width="100" align="center">${user.username}</td>
                 <td width="60" align="center"><a href="<c:url value='/removeUser/${user.id}'/>">Delete</a></td>
                 <c:if test="${user.attachedHotel ne null}">
-                    <td width="150" align="center">${user.attachedHotel.info}</td>
+                    <td width="170" align="center">${user.attachedHotel.info}</td>
                 </c:if>
 
             </tr>

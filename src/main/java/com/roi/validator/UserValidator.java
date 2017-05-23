@@ -12,8 +12,6 @@ import org.springframework.validation.Validator;
  * Validator for {@link User} class,
  * implements {@link Validator} interface.
  *
- * @author Eugene Suleimanov
- * @version 1.0
  */
 
 @Component
