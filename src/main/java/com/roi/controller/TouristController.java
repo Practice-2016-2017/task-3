@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
@@ -59,6 +60,7 @@ public class TouristController {
      * @return Tourist page
      */
     @RequestMapping(value = "/tourist/addBooking/{chosenDate}", method = RequestMethod.POST)
+    @Transactional
     public String addHotel(@RequestParam("chooseRoom") int id, @PathVariable("chosenDate") String date) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -72,8 +74,12 @@ public class TouristController {
         }
         java.sql.Date dateSQL = new java.sql.Date(dateUtil.getTime());
         log.info("Starting to add an order for room with id" + id + "for the date" + date);
+        if(bookingService.checkBookingByRoomAndDate(room.getRoomId(),dateSQL)){
         bookingService.addBookingToRoom(user, dateSQL, room);
-        log.info("Done successfully  ");
+        log.info("Done successfully  ");}
+        else {
+            return "redirect:/errorPage/This booking is unavailable";
+        }
         return "redirect:/tourist/";
     }
 
@@ -124,13 +130,31 @@ public class TouristController {
     }
 
     @RequestMapping("/removeBooking/{id}")
-    public String removeUser(@PathVariable("id") int id) {
-        log.info("Starting to remove user with id " + id);
+    @Transactional
+    public String deleteBooking(@PathVariable("id") int id) {
 
-        this.bookingService.removeBooking(id);
-        log.info("Done successfully  ");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        User user = userService.findByUsername(name);
+
+
+        log.info("Starting to remove booking with id " + id);
+
+        if(this.bookingService.getBookingById(id) == null)
+        {
+            return "redirect:/errorPage/Such booking does not exist";}
+        else {
+            if(!Objects.equals(this.bookingService.getBookingById(id).getUser().getId(), user.getId())){
+                return "redirect:/errorPage/Access to this operation is forbidden";
+
+            }
+
+        }
+            this.bookingService.removeBooking(id);
+            log.info("Done successfully  ");
 
         return "redirect:/tourist/";
+
     }
 
 }

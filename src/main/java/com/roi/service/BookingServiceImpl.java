@@ -98,4 +98,18 @@ public class BookingServiceImpl implements BookingService {
         bookingDao.delete(id);
     }
 
+    @Override
+    @Transactional
+    public Boolean checkBookingByRoomAndDate(int roomId, Date date) {
+        List<Booking> bookingList = bookingDao.findAll();
+        bookingList.removeIf(booking -> (!booking.getRoom().getRoomId().equals(roomId) || !(booking.getDate().getYear() == date.getYear() &  booking.getDate().getDay() == date.getDay() & booking.getDate().getMonth() == date.getMonth())));
+        return bookingList.isEmpty();
+    }
+
+    @Override
+    @Transactional
+    public Booking getBookingById(int id){
+        return bookingDao.findOne(id);
+    }
+
 }

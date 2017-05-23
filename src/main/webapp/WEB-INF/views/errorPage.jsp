@@ -13,12 +13,16 @@
 
 <body>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 
 
 <div>
  ${errorText}
 </div>
+
+<a href="<c:url value='/${linkBack}'/>">Get Back</a>
+
 <div></div>
 
 

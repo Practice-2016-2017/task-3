@@ -41,11 +41,16 @@ public class AdminController {
      * @return Admin page
      */
     @RequestMapping(value = "/users/addH", method = RequestMethod.POST)
+    @Transactional
     public String addHotel(@RequestParam("info") String str) {
+        if(!str.equals("")){
         log.info("Starting to add new hotel " + str);
         Hotel hotel = new Hotel(str);
+        if(hotelService.findByInfo(str)!=null) {
+            return "redirect:/errorPage/Such hotel already exists";
+        }
         this.hotelService.addHotel(hotel);
-        log.info("Done successfully  ");
+        log.info("Done successfully  ");}
         return "redirect:/users/";
     }
 
@@ -64,7 +69,7 @@ public class AdminController {
 
         }
         catch (Exception ex){
-            return "redirect:/errorPage/ERROR!";
+            return "redirect:/errorPage/Such  hotel does not exist";
 
 
         }
@@ -99,7 +104,11 @@ public class AdminController {
     @RequestMapping("/removeUser/{id}")
     public String removeUser(@PathVariable("id") long id) {
         log.info("Starting to remove user with id" + id);
-        this.userService.removeUser(id);
+        try{
+        this.userService.removeUser(id);}
+        catch (Exception ex){
+            return "redirect:/errorPage/Such user does not exist";
+        }
         log.info("Done successfully  " );
         return "redirect:/users/";
     }
@@ -114,17 +123,25 @@ public class AdminController {
     @RequestMapping(value = "/users/addManager", method = RequestMethod.POST)
     @Transactional
     public String addManager(@RequestParam("HotelInfo") String hotelInfo, @RequestParam("Username") String username) {
-        User user = this.userService.findByUsername(username);
-        Hotel hotel = this.hotelService.findByInfo(hotelInfo);
-        user.setAttachedHotel(hotel);
-        Role role = new Role();
-        role.setId(3);
-        role.setName("ROLE_MANAGER");
-        user.getRoles().add(role);
         log.info("Starting to add Manager" + username + " to the hotel" + hotelInfo);
-        this.userService.editUser(user);
-        log.info("Done successfully  " );
-
+        try {
+            User user = this.userService.findByUsername(username);
+            Hotel hotel = this.hotelService.findByInfo(hotelInfo);
+            if(hotel == null)
+                return "redirect:/errorPage/Error during appointing manager: Such hotel does not exist";
+            if(user == null)
+                return "redirect:/errorPage/Error during appointing manager: Such user does not exist";
+            user.setAttachedHotel(hotel);
+            Role role = new Role();
+            role.setId(3);
+            role.setName("ROLE_MANAGER");
+            user.getRoles().add(role);
+            this.userService.editUser(user);
+            log.info("Done successfully  ");
+        }
+        catch (Exception ex){
+            return "redirect:/errorPage/Error during establishing a wire between manager and hotel";
+        }
         return "redirect:/users";
 
     }
