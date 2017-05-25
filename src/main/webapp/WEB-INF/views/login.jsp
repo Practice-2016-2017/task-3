@@ -7,11 +7,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <link href="<c:url value="/WEB-INF/views/css/style.css" />" rel="stylesheet">
     <title>Log in with your account</title>
-
-
-
 </head>
 
 <body>
@@ -23,14 +20,14 @@
 
         <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>
-            <p></p>
+            <br>
             <input name="username" type="text"  placeholder="Username"
                    autofocus="true"/>
-            <p></p>
+            <br>
             <input name="password" type="password"  placeholder="Password"/>
-            <p></p>
+            <br>
             <span>${error}</span>
-            <p></p>
+            <br>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
             <button type="submit">Log In</button>

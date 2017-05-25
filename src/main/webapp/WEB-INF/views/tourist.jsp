@@ -26,7 +26,7 @@
         </h2>
     </c:if>
 </div>
-
+<p>Choose date</p>
 
 <c:if test="${!empty getUserBookings}">
     <table>
@@ -63,11 +63,6 @@
 <c:if test="${empty getAvailableRooms}">
 <c:url var="chooseAction1" value="/tourist/hotelchoose/${chosenDate}"/>
 <form:form action="${chooseAction1}">
-
-
-
-
-
     <c:if test="${!empty getHotelsByDate}">
 
     <div>
