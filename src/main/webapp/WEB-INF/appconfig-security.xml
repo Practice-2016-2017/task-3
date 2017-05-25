@@ -12,9 +12,14 @@
         <intercept-url pattern="/welcome" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_MANAGER')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/manager" access="hasRole('ROLE_MANAGER')"/>
+        <intercept-url pattern="/manager/*" access="hasRole('ROLE_MANAGER')"/>
         <intercept-url pattern="/tourist" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/tourist/*" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/removeBooking/*" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/users*" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/users/*" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/removeUser/*" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/remove/*" access="hasRole('ROLE_ADMIN')"/>
 
 
         <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"

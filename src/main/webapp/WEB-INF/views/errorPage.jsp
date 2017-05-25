@@ -16,14 +16,20 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 
-
+<h3>
+    <div>
+        We're sorry to tell you that, but the following error occurred:
+    </div>
+    <p></p>
 <div>
  ${errorText}
 </div>
+    <p></p>
 
-<a href="<c:url value='/${linkBack}'/>">Get Back</a>
+    <a href="<c:url value='/${linkBack}'/>">Get Back</a>
 
-<div></div>
+</h3>
+
 
 
 
