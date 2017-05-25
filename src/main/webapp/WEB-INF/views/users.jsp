@@ -103,7 +103,7 @@
 
     <label>
         <select name="Username">
-            <c:forEach items="${getAllUsers}" var="user">
+            <c:forEach items="${getAllNotAdmins}" var="user">
                 <option value="${user.username}">${user.username}</option>
             </c:forEach>
         </select>

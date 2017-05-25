@@ -30,6 +30,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userDao = userDao;
     }
 
+    /**
+     * Load into the system user with given username
+     *
+     * @param username given username
+     * @return details of user with given username
+     */
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
