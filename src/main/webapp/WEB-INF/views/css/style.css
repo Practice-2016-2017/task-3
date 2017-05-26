@@ -1,3 +1,13 @@
 .p{
     font-size: 24pt;
 }
+
+.logoutForm:hover{
+    cursor: pointer;
+}
+.container{
+    border: 2px solid red;
+}
+#logout:hover{
+    cursor: pointer;
+}

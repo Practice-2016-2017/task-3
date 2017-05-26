@@ -20,10 +20,10 @@
 
         <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>
-            <br>
+            <p>Login:</p>
             <input name="username" type="text"  placeholder="Username"
                    autofocus="true"/>
-            <br>
+            <p>Password:</p>
             <input name="password" type="password"  placeholder="Password"/>
             <br>
             <span>${error}</span>

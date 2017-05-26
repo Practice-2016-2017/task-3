@@ -1,5 +1,6 @@
 package com.roi.service;
 
+import com.roi.model.Booking;
 import com.roi.model.Hotel;
 import com.roi.model.Room;
 import com.roi.model.User;
@@ -47,6 +48,7 @@ public class BookingServiceImplTest {
         Room room = new Room();
         User user1 = new User();
         User user2 = new User();
+        Booking booking = new Booking();
         user1 = userService.findByUsername("karych_72");
         user2 = userService.findByUsername("Nika1996");
         Hotel hotel = new Hotel();
@@ -55,13 +57,15 @@ public class BookingServiceImplTest {
         room.setHotel(hotel);
         room = roomService.getRoomById(1);
         bookingService.addBookingToRoom(user1, date, room);
+        booking.setRoom(room);
+        booking.setDate(date);
         assertTrue(bookingService.checkBookingByRoomAndDate(room.getRoomId(), date));
         try {
             bookingService.addBookingToRoom(user2, date, room);
         } catch(Exception e) {
             fail("Wrong, test failed");
         }
-        bookingService.removeBooking(1);
+        bookingService.removeBooking(booking.getBookingId());
     }
 
 }
