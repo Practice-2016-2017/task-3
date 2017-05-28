@@ -9,9 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.OutputStream;
 import java.util.Date;
+import java.util.Iterator;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by User on 26.05.2017.
@@ -40,8 +43,29 @@ public class BookingServiceImplTest {
         System.out.println(" afterTest()");
     }
 
-
     @Test
+    public void iterator_will_return_hello_world() {
+        //подготавливаем
+        Iterator i = mock(Iterator.class);
+        when(i.next()).thenReturn("Hello").thenReturn("World");
+        //выполняем
+        String result = i.next()+" "+i.next();
+        //сравниваем
+        assertEquals("Hello World", result);
+    }
+    @Test
+    public void abT () throws Exception{
+        System.out.println(" Test");
+        User mockuser1= mock(User.class);
+        //User mockuser2= mock(User.class);
+        Date mockdate = mock(Date.class);
+        Room mockroom = mock(Room.class);
+        BookingServiceImpl mockbook = mock(BookingServiceImpl.class);
+        mockbook.addBookingToRoom(mockuser1, mockdate, mockroom);
+        assertTrue(mockbook.checkBookingByRoomAndDate(mockroom.getRoomId(), mockdate));
+    }
+
+  /*  @Test
     public void addBookingToRoomTest() throws Exception {
         System.out.println("Test for adding booking to room");
         System.out.println("");
@@ -67,5 +91,5 @@ public class BookingServiceImplTest {
         }
         bookingService.removeBooking(booking.getBookingId());
     }
-
+*/
 }
