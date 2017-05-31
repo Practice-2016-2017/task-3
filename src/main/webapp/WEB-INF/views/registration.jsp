@@ -15,10 +15,10 @@
 
 <body>
 
-<div class="container">
+<div class="container" align="center">
 
     <form:form method="POST" modelAttribute="userForm" >
-        <h2 >Create your account</h2>
+        <h2 align="center" > Create your account </h2>
         <p></p>
         <spring:bind path="username">
             <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -31,7 +31,7 @@
 
         <p></p>
         <spring:bind path="password">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
+            <div   class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="password" path="password" placeholder="Password"></form:input>
                 <form:errors path="password"></form:errors>
             </div>
@@ -40,14 +40,14 @@
         <p></p>
 
         <spring:bind path="confirmPassword">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
+            <div  class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="password" path="confirmPassword"
                             placeholder="Confirm your password"></form:input>
                 <form:errors path="confirmPassword"></form:errors>
             </div>
         </spring:bind>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" align=" center">Submit</button>
     </form:form>
 
 </div>

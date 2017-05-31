@@ -104,7 +104,7 @@ public class BookingServiceImpl implements BookingService {
         java.sql.Date dateSQL = new java.sql.Date(date.getTime());
         List<Booking> bookingList = bookingDao.findAll();
         bookingList.removeIf(booking -> (!booking.getRoom().getRoomId().equals(roomId) || !dateSQL.equals(booking.getDate())));
-        return bookingList.isEmpty();
+        return (bookingList.isEmpty());
     }
 
     @Override

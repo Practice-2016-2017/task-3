@@ -1,17 +1,20 @@
 package com.roi.service;
 
-import com.roi.model.Booking;
-import com.roi.model.Hotel;
-import com.roi.model.Room;
-import com.roi.model.User;
+import com.roi.dao.BookingDao;
+import com.roi.model.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -19,19 +22,15 @@ import static org.mockito.Mockito.*;
 /**
  * Created by User on 26.05.2017.
  */
-
+@RunWith(MockitoJUnitRunner.class)
 public class BookingServiceImplTest {
-    @Autowired
-    private BookingServiceImpl bookingService;
 
-    @Autowired
-    private UserServiceImpl userService;
 
-    @Autowired
-    private RoomServiceImpl roomService;
+    @Mock
+    RoomService roomService;
 
-    @Autowired
-    private HotelServiceImpl hotelService;
+    @Mock
+    BookingDao bookingDao;
 
     @Before
     public void setUp() throws Exception {
@@ -56,13 +55,56 @@ public class BookingServiceImplTest {
     @Test
     public void abT () throws Exception{
         System.out.println(" Test");
-        User mockuser1= mock(User.class);
+        User mockuser1= Mockito.mock(User.class);
+        mockuser1.setId((long) 123);
+        when(mockuser1.getId()).thenReturn(Long.valueOf("123"));
         //User mockuser2= mock(User.class);
-        Date mockdate = mock(Date.class);
-        Room mockroom = mock(Room.class);
+        Date mockdate = new Date(2017, 10, 23);
+        Room mockroom = Mockito.mock(Room.class);
+        Role mockrole = Mockito.mock(Role.class);
+        when(mockrole.getId()).thenReturn(1);
+    //  when(mockrole.getUsers()).thenReturn((Set<User>) mockuser1);
+        when(mockrole.getName()).thenReturn("ROLE_TOURIST");
+        Hotel mockhotel = Mockito.mock(Hotel.class);
+        when(mockhotel.getHotelId()).thenReturn(1);
+        when(mockhotel.getInfo()).thenReturn("pribalton");
+     //   when(mockhotel.getUsers()).thenReturn((Set<User>) mockuser1);
+     //   when(mockhotel.getRoom()).thenReturn((Set<Room>) mockroom);
+        when(mockroom.getRoomId()).thenReturn(1);
+        when(mockroom.getRoomNum()).thenReturn(4);
+        when(mockroom.getHotel()).thenReturn(mockhotel);
+        when(mockuser1.getConfirmPassword()).thenReturn("uimi");
+        when(mockuser1.getPassword()).thenReturn("uimi");
+     //   when(mockuser1.getRoles()).thenReturn((Set<Role>) mockrole);
+        when(mockuser1.getAttachedHotel()).thenReturn(mockhotel);
+        System.out.println(" userId: " + mockuser1.getId() + ", RoomId: " + mockroom.getRoomId()+ ", date: " + mockdate.toString());
         BookingServiceImpl mockbook = mock(BookingServiceImpl.class);
         mockbook.addBookingToRoom(mockuser1, mockdate, mockroom);
-        assertTrue(mockbook.checkBookingByRoomAndDate(mockroom.getRoomId(), mockdate));
+        verify(mockbook).addBookingToRoom(mockuser1, mockdate, mockroom);
+        assertEquals(true, mockbook.checkBookingByRoomAndDate(mockroom.getRoomId(), mockdate));
+    }
+    @Test
+    public void grdh () throws Exception {
+        System.out.println(" Test2");
+        Date date = new Date();
+        Hotel mockhotel = mock(Hotel.class);
+
+        BookingServiceImpl mockbook = mock(BookingServiceImpl.class);
+        mockbook.getRoomByDateAndHotel(date, mockhotel);
+        verify(mockbook).getRoomByDateAndHotel(date, mockhotel);
+
+    }
+    @Test
+    public void test_get_by_id_success() throws Exception {
+        User user = new User();
+        when(UserService.findById(1)).thenReturn(user);
+        mockMvc.perform(get("/users/{id}", 1))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.username", is("Daenerys Targaryen")));
+        verify(userService, times(1)).findById(1);
+        verifyNoMoreInteractions(userService);
     }
 
   /*  @Test
